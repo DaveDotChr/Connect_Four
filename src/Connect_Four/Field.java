@@ -35,7 +35,7 @@ public class Field {
     }
 
     private boolean CheckPlacement(){
-        //Checks if the Field is already acessible or not (Cant put Symbol in 2 before 1 is filled etc.)
+        //Checks if the Field is already acessible or not (Cant put Symbol in 2 before 1 is filled etc.)asd
         return true;
     }
 
