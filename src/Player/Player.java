@@ -36,7 +36,7 @@ protected Field currentField;
         boolean setable = false;
 
         for (int y = 0; y <= 5; y++) {
-            System.out.println(Field_Matrix[Line][y].CheckIfSet());
+            //System.out.println(Field_Matrix[Line][y].CheckIfSet());
             if(!Field_Matrix[Line][y].CheckIfSet()){
                 Field_Matrix[Line][y].Fill(this.Color);
                 setable = true;

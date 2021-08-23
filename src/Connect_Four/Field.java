@@ -13,8 +13,8 @@ public class Field {
         this.x_pos = x_pos;
         this.y_pos = y_pos;
         this.Set = false;
-        this.Color = "";
-        System.out.println("Field " + FieldCount + " created" + x_pos + " <x-y> " + y_pos);
+        this.Color = " ";
+        //System.out.println("Field " + FieldCount + " created" + x_pos + " <x-y> " + y_pos);
         FieldCount++;
     }
 

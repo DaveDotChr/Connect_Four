@@ -15,7 +15,7 @@ public class Human_Player extends Player{
 
         while (!test){
             test = placeSymbol(Integer.parseInt(sc.nextLine()));
-
+            
             if(!test)
             System.out.println("Line already full, please choose different line");
         }

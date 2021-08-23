@@ -11,6 +11,7 @@ public class Connect_Four {
     private AI[] AI_List;
     private Player currentPlayer;
     private int PlayerIndex = 0;
+    private StringBuilder str = new StringBuilder();
 
     public Connect_Four(){
         this.Field_Matrix = new Field[7][6];
@@ -31,8 +32,8 @@ public class Connect_Four {
 
     private void initPlayers(){
         Players = new Human_Player[2];
-        Players[0] = new Human_Player(this.Field_Matrix, "Red");
-        Players[1] = new Human_Player(this.Field_Matrix, "Blue");
+        Players[0] = new Human_Player(this.Field_Matrix, "R");
+        Players[1] = new Human_Player(this.Field_Matrix, "B");
 
     }
 
@@ -70,23 +71,29 @@ public class Connect_Four {
         }
 
         //Diagonal Check
-        int lowest = 0;
-        int Diagonal_bottom_left = 0;
-        int Diagonal_bottom_right = 0;
+        concurrent = 0;
 
-        if(c_y < c_x){
-            lowest = c_y;
-        } else if (c_x < c_y){
-            lowest = c_x;
-        } else {
-            lowest = c_x;
+        findLowest(c_x, c_y, "ll");
+
+        
+
+        return result;
+    }
+
+    private String findLowest(int x, int y , String direction){
+        String result = "";
+        if(direction.equals("ll")){
+            while(x!=0 && y!=0){
+                x--;
+                y--;
+            }
+            if (x == 0){
+                result = "x";
+            } else {
+                result = "y";
+            }
+            System.out.println(x + " " + y);
         }
-
-
-        for (int y = 0; y <= 5; y++) {
-            
-        }
-
 
         return result;
     }
@@ -100,6 +107,7 @@ public class Connect_Four {
         } else {
             PlayerIndex = 0;
         }
+        drawBoard();
         currentPlayer.StartTurn();
         CheckWincondition();
     }
@@ -107,6 +115,21 @@ public class Connect_Four {
     private void endGame(){
         System.out.println("Spieler: " + currentPlayer.getColor() + " hat gewonnen");
         System.exit(0);
+    }
+
+    private void drawBoard(){
+        str.delete(0, str.length());
+        for (int y = 5; y >= 0; y--) {
+            str.append("     ");
+            for (int x = 0; x <= 6; x++) {
+                str.append("[" + Field_Matrix[x][y].CheckColor() + "] ");
+
+            }
+            str.append("\n");
+        }
+        str.append("Line [0] [1] [2] [3] [4] [5] [6]");
+        System.out.println(str.toString() + "\n ----------------------------------- \n");
+        
     }
 
 }
