@@ -3,7 +3,7 @@ import Connect_Four.Field;
 import java.util.Scanner;
 
 
-public abstract class Player {
+public abstract class Player implements Basic{
     
 protected Field Field;
 protected String Color;
@@ -40,7 +40,7 @@ protected Field currentField;
             if(!Field_Matrix[Line][y].CheckIfSet()){
                 Field_Matrix[Line][y].Fill(this.Color);
                 setable = true;
-                System.out.println("Symbol with color: " + this.Color + " at x: " + Line + " y: " + y);
+                //System.out.println("Symbol with color: " + this.Color + " at x: " + Line + " y: " + y);
                 currentField = Field_Matrix[Line][y];
                 break;
             }
