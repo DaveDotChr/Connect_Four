@@ -1,7 +1,5 @@
 package Connect_Four;
 
-import jdk.jfr.Description;
-
 public class Field {
     
     private String Color;
@@ -15,7 +13,7 @@ public class Field {
         this.x_pos = x_pos;
         this.y_pos = y_pos;
         this.Set = false;
-        this.Color = null;
+        this.Color = "";
         System.out.println("Field " + FieldCount + " created" + x_pos + " <x-y> " + y_pos);
         FieldCount++;
     }
@@ -39,17 +37,10 @@ public class Field {
         return true;
     }
 
-    /**
-    @Description Checks if the selected field is already occupied by a Symbol, if not it sets the Symbol of the Player
-    @param Takes the field that has been selected by the Player
-    @returns Returns False if the 
-    */
-    public boolean placeSymbol(Field Field){
-        boolean setable = !CheckIfSet();
-        setable = CheckPlacement();
-        if(setable){
-            Field.Fill(this.Color);
-        }
-        return setable;
+    public int[] getCoordinates(){
+        int[] re = {x_pos, y_pos};
+        return re;
     }
+
+    
 }
