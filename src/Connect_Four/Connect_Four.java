@@ -1,24 +1,28 @@
 package Connect_Four;
 
 import Player.Player;
-import Player.AI;
-import Player.Basic;
+
+import java.util.ArrayList;
+
+import AI.AI;
 import Player.Human_Player;
 
-public class Connect_Four {
+public class Connect_Four implements Runnable{
 
     private Field[][] Field_Matrix;
     private Human_Player[] Players;
-    private AI[] AI_List;
     private Player currentPlayer;
     private int PlayerIndex = 0;
     private StringBuilder str = new StringBuilder();
+    private AI[] AI_Players;
+    private Rules rules;
+    private Turn turn;
+    ArrayList<ArrayList<Turn>> list;
+    //TODO Write Data of Turns array to File for reuse etc.
+    private ArrayList<Turn> Turns = new ArrayList<Turn>();
 
-    public Connect_Four() {
-        this.Field_Matrix = new Field[7][6];
-        initFieldMatrix();
-        initPlayers();
-        startGame();
+    public Connect_Four(ArrayList<ArrayList<Turn>> list) {
+        this.list = list;
     }
 
     private void initFieldMatrix() {
@@ -28,12 +32,26 @@ public class Connect_Four {
                 this.Field_Matrix[x][y] = new Field(x, y);
             }
         }
+        this.rules = new Rules(Field_Matrix);
+    }
+
+    public void run(){
+        System.out.println("Game started");
+        this.Field_Matrix = new Field[7][6];
+        initFieldMatrix();
+        initPlayers(); //Decide if want Ai or Human Players/ maybe mix to test 1 Ai vs 1 Human
+        startGame();
     }
 
     private void initPlayers() {
         Players = new Human_Player[2];
         Players[0] = new Human_Player(this.Field_Matrix, "R");
         Players[1] = new Human_Player(this.Field_Matrix, "B");
+
+        
+        AI_Players = new AI[2];
+        AI_Players[0]= new AI(this.Field_Matrix, "R");
+        AI_Players[1]= new AI(this.Field_Matrix, "B");
 
     }
 
@@ -46,103 +64,7 @@ public class Connect_Four {
 
     }
 
-    public void CheckWincondition() {
-        String match = currentPlayer.getColor();
-        Field current = currentPlayer.currentField();
-        int concurrent = 0;
-        int c_x = current.getCoordinates()[0];
-        int c_y = current.getCoordinates()[1];
-
-        // Horizontal Check
-
-        for (int x = 0; x <= 6; x++) {
-            if (this.Field_Matrix[x][c_y].CheckColor().equals(match)) {
-                concurrent++;
-            } else {
-                concurrent = 0;
-            }
-            if (concurrent == 4)
-                currentPlayer.setWon();
-        }
-        System.out.println("Horizontal" + concurrent);
-        concurrent = 0;
-        // Vertical Check
-
-        for (int y = 0; y <= 5; y++) {
-            if (this.Field_Matrix[c_x][y].CheckColor().equals(match)) {
-                concurrent++;
-            } else {
-                concurrent = 0;
-            }
-            if (concurrent == 4)
-                currentPlayer.setWon();
-        }
-        System.out.println("Vertical" + concurrent);
-
-        // Diagonal Check
-        concurrent = 0;
-        int[] lineStart;
-        // has to check direction up right
-        lineStart = findLowest(c_x, c_y, "ll");
-        int tempx = lineStart[0];
-        int tempy = lineStart[1];
-
-        while (tempx <= 6 && tempy <= 5) {
-            if (this.Field_Matrix[tempx][tempy].CheckColor().equals(match)) {
-                concurrent++;
-            } else {
-                concurrent = 0;
-            }
-            if (concurrent == 4)
-                currentPlayer.setWon();
-            tempx++;
-            tempy++;
-        }
-        concurrent = 0;
-
-        // Has to check direction up left
-        lineStart = findLowest(c_x, c_y, "lr");
-        tempx = lineStart[0];
-        tempy = lineStart[1];
-
-        while (tempx >= 0 && tempy <= 5) {
-            if (this.Field_Matrix[tempx][tempy].CheckColor().equals(match)) {
-                concurrent++;
-            } else {
-                concurrent = 0;
-            }
-            if (concurrent == 4)
-                currentPlayer.setWon();
-            tempx--;
-            tempy++;
-        }
-    }
-
-    private int[] findLowest(int x, int y, String direction) {
-        int[] result = { 0, 0 };
-        if (direction.equals("ll")) {
-            while (x != 0 && y != 0) {
-                x--;
-                y--;
-            }
-            result[0] = x;
-            result[1] = y;
-            System.out.println(x + " " + y + " lowest left");
-        } else if (direction.equals("lr")) {
-            while (x != 6 && y != 0) {
-                x++;
-                y--;
-            }
-            result[0] = x;
-            result[1] = y;
-            System.out.println(x + " " + y + " lowest right");
-        }
-
-        return result;
-    }
-
     private void nextTurn() {
-
         currentPlayer = Players[PlayerIndex];
         System.out.println("Turn: " + currentPlayer.getColor());
         // Changes Player for next turn
@@ -153,10 +75,11 @@ public class Connect_Four {
         }
         drawBoard();
         currentPlayer.StartTurn();
-        CheckWincondition();
+        Turns.add(rules.CheckWincondition(currentPlayer));
     }
 
     private void endGame() {
+        list.add(Turns);
         System.out.println("Spieler: " + currentPlayer.getColor() + " hat gewonnen");
         drawBoard();
         System.exit(0);

@@ -32,11 +32,6 @@ public class Field {
         return Color;
     }
 
-    private boolean CheckPlacement(){
-        //Checks if the Field is already acessible or not (Cant put Symbol in 2 before 1 is filled etc.)asdasdasd
-        return true;
-    }
-
     public int[] getCoordinates(){
         int[] re = {x_pos, y_pos};
         return re;

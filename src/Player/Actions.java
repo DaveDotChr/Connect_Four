@@ -2,7 +2,7 @@ package Player;
 
 import Connect_Four.Field;
 
-public interface Basic {
+public interface Actions {
     
 
     boolean getWon();

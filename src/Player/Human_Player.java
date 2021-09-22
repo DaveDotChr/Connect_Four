@@ -1,5 +1,6 @@
 package Player;
 import Connect_Four.Field;
+import Connect_Four.Turn;
 
 
 public class Human_Player extends Player{
@@ -13,6 +14,7 @@ public class Human_Player extends Player{
         boolean test = false;
         Exception ex = null;
         while (!test){
+            //Lets Player choose a Line to place the Symbol in, if not full places the Symbol
             try{
                 test = placeSymbol(Integer.parseInt(sc.nextLine()));
             } catch(ArrayIndexOutOfBoundsException e){
@@ -25,5 +27,4 @@ public class Human_Player extends Player{
             System.out.println("Line already full, please choose different line");
         }
     }
-
 }
