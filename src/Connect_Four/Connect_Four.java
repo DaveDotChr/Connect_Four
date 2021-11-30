@@ -90,8 +90,16 @@ public class Connect_Four implements Runnable{
         for (int y = 5; y >= 0; y--) {
             str.append("     ");
             for (int x = 0; x <= 6; x++) {
-                str.append("[" + Field_Matrix[x][y].CheckColor() + "] ");
-
+                String color = "";
+                if(Field_Matrix[x][y].CheckColor().equals("R")){
+                    color = "\u001B[31m";
+                } else if(Field_Matrix[x][y].CheckColor().equals("B")) {
+                    color = "\u001B[34m";
+                } else {
+                    color = "\u001B[0m";
+                }
+                str.append(color +"[" + Field_Matrix[x][y].CheckColor() + "] ");
+                color = "\u001B[0m";
             }
             str.append("\n");
         }
