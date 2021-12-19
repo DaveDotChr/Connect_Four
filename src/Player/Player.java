@@ -41,6 +41,7 @@ public abstract class Player implements Actions{
             if (!Field_Matrix[Line][y].CheckIfSet()) {
                 Field_Matrix[Line][y].Fill(this.Color);
                 setable = true;
+                Field_Matrix[Line][y+1].setSetable(true);
                 // System.out.println("Symbol with color: " + this.Color + " at x: " + Line + "
                 // y: " + y);
                 currentField = Field_Matrix[Line][y];

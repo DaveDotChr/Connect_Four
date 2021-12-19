@@ -3,6 +3,7 @@ package Connect_Four;
 import Player.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import AI.AI;
 import Player.Human_Player;
@@ -27,9 +28,11 @@ public class Connect_Four implements Runnable{
 
     private void initFieldMatrix() {
         for (int x = 0; x <= 6; x++) {
-
             for (int y = 0; y <= 5; y++) {
                 this.Field_Matrix[x][y] = new Field(x, y);
+                if(y == 0){
+                    this.Field_Matrix[x][y].setSetable(true);
+                }
             }
         }
         this.rules = new Rules(Field_Matrix);
@@ -73,9 +76,25 @@ public class Connect_Four implements Runnable{
         } else {
             PlayerIndex = 0;
         }
+        doCalculations();
         drawBoard();
         currentPlayer.StartTurn();
         Turns.add(rules.CheckWincondition(currentPlayer));
+    }
+
+    private void doCalculations(){
+        for (Field[] a : Field_Matrix) {
+            Arrays.stream(a).filter(i -> i.isSetable()).forEach(i -> i.calculatePrediction());
+        }
+        
+        // for (int x = 0; x <= 6; x++) {
+        //     for (int y = 0; y <= 5; y++) {
+        //         Field field = Field_Matrix[x][y];
+        //         if(field.isSetable()){
+        //             field.calculatePrediction();
+        //         }
+        //     }
+        // }
     }
 
     private void endGame() {
@@ -99,13 +118,23 @@ public class Connect_Four implements Runnable{
                     color = "\u001B[0m";
                 }
                 str.append(color +"[" + Field_Matrix[x][y].CheckColor() + "] ");
+                
                 color = "\u001B[0m";
             }
+            drawCalculations(y);
             str.append("\n");
         }
-        str.append("Line [0] [1] [2] [3] [4] [5] [6]");
+        str.append("Line [0] [1] [2] [3] [4] [5] [6]                  [0]   [1]   [2]   [3]   [4]   [5]   [6]");
         System.out.println(str.toString() + "\n ----------------------------------- \n");
 
+    }
+
+    private void drawCalculations(int y){
+        str.append("                ");
+        for (int i = 0; i <= 6; i++) {
+            str.append("[" + Field_Matrix[i][y].getPrediction() + "] ");    
+        }
+        
     }
 
 }

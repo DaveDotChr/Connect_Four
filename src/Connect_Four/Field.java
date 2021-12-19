@@ -7,6 +7,9 @@ public class Field {
     private int x_pos;
     private int y_pos;
     private static int FieldCount = 1;
+    public double prediction = 1.0;
+    private boolean setable;
+    private String[] predColor = {"1","","","","","","",""};
 
 
     public Field(int x_pos, int y_pos){
@@ -37,5 +40,26 @@ public class Field {
         return re;
     }
 
+    public void setSetable(boolean bool){
+        this.setable = bool;
+    }
+
+    public boolean isSetable(){
+        return this.setable;
+    }
+
+    public void calculatePrediction(){
+        this.prediction = 9;
+    }
+
+    public String getPrediction(){
+        if(this.Set == true){
+            return " X ";
+        }
+        if(this.setable == false){
+            return "0.0";
+        }
+        return String.valueOf(this.prediction);
+    }
     
 }
