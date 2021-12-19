@@ -31,5 +31,13 @@ public class Turn {
     public int getNumber(){
         return this.TurnNumber;
     }
+
+    public void setConnectsTo(int connects){
+        this.connects = connects;
+    }
     
+    public int getConnectsTo(){
+        return this.connects;
+    }
+
 }

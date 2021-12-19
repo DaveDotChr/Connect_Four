@@ -18,7 +18,8 @@ public class Connect_Four implements Runnable{
     private AI[] AI_Players;
     private Rules rules;
     private Turn turn;
-    ArrayList<ArrayList<Turn>> list;
+    private Calculations calc;
+    private ArrayList<ArrayList<Turn>> list;
     //TODO Write Data of Turns array to File for reuse etc.
     private ArrayList<Turn> Turns = new ArrayList<Turn>();
 
@@ -36,6 +37,7 @@ public class Connect_Four implements Runnable{
             }
         }
         this.rules = new Rules(Field_Matrix);
+        this.calc = new Calculations(Field_Matrix);
     }
 
     public void run(){
