@@ -1,12 +1,12 @@
 package Connect_Four;
 
 import Player.Player;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
+import Utility.Calculations;
+import Utility.Factory;
 import AI.AI;
 import Player.Human_Player;
+
+import java.util.ArrayList;
 
 public class Connect_Four implements Runnable{
 
@@ -16,11 +16,9 @@ public class Connect_Four implements Runnable{
     private int PlayerIndex = 0;
     private StringBuilder str = new StringBuilder();
     private AI[] AI_Players;
-    private Rules rules;
     private Turn turn;
     private Calculations calc;
     private ArrayList<ArrayList<Turn>> list;
-    //TODO Write Data of Turns array to File for reuse etc.
     private ArrayList<Turn> Turns = new ArrayList<Turn>();
 
     public Connect_Four(ArrayList<ArrayList<Turn>> list) {
@@ -36,8 +34,7 @@ public class Connect_Four implements Runnable{
                 }
             }
         }
-        this.rules = new Rules(Field_Matrix);
-        this.calc = new Calculations(Field_Matrix);
+        this.calc = Factory.createCalculations(Field_Matrix);
     }
 
     public void run(){
@@ -81,25 +78,15 @@ public class Connect_Four implements Runnable{
         doCalculations();
         drawBoard();
         currentPlayer.StartTurn();
-        Turns.add(rules.CheckWincondition(currentPlayer));
+        Turns.add(calc.CheckWincondition(currentPlayer));
     }
 
     private void doCalculations(){
-        for (Field[] a : Field_Matrix) {
-            Arrays.stream(a).filter(i -> i.isSetable()).forEach(i -> i.calculatePrediction());
-        }
-        
-        // for (int x = 0; x <= 6; x++) {
-        //     for (int y = 0; y <= 5; y++) {
-        //         Field field = Field_Matrix[x][y];
-        //         if(field.isSetable()){
-        //             field.calculatePrediction();
-        //         }
-        //     }
-        // }
+        this.calc.calcPredictions();
     }
 
     private void endGame() {
+        //TODO Write Data of Turns array to File for reuse etc.
         list.add(Turns);
         System.out.println("Spieler: " + currentPlayer.getColor() + " hat gewonnen");
         drawBoard();

@@ -4,14 +4,14 @@ import java.util.Random;
 
 import Connect_Four.Field;
 import Player.Actions;
-import Player.Player;
+import Utility.Calculations;
+import Utility.Factory;
 import Connect_Four.Turn;
-import Connect_Four.Rules;
 
 public class AI implements Actions {
 
     private Field[][] Field_Matrix;
-    private Rules rules;
+    private Calculations calc;
     private Turn turn;
     private Random r = new Random();
     private String Color;
@@ -21,7 +21,7 @@ public class AI implements Actions {
     public AI(Field[][] Field_Matrix, String Color) {
         
         this.Field_Matrix = Field_Matrix;
-        rules = new Rules(Field_Matrix);
+        Factory.createCalculations(Field_Matrix);
         this.Color = Color;
     }
 

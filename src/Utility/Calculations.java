@@ -1,13 +1,45 @@
-package Connect_Four;
+package Utility;
 
+import Connect_Four.Field;
+import Connect_Four.Turn;
 import Player.Player;
 
-public abstract class General_Functions {
-    
-    private Field[][] Field_Matrix;
+//Functional Class that calculates Moves propability etc.
 
-    public General_Functions (Field[][] Field_Matrix){
+public class Calculations {
+
+    private Field[][] Field_Matrix;
+    private int Turnnum = 0;
+
+    public Calculations(Field[][] Field_Matrix) {
         this.Field_Matrix = Field_Matrix;
+    }
+
+    public void calcPredictions() {
+        for (int x = 0; x <= 6; x++) {
+            for (int y = 0; y <= 5; y++) {
+                Field field = Field_Matrix[x][y];
+                if (field.isSetable()) {
+                    // Logic for calcualation here
+                }
+            }
+        }
+    }
+
+    // Checks how many Field of a specific Color Match and returns the number
+    public int HorizontalConnections(String match, int c_y) {
+        int concurrent = 0;
+        for (int x = 0; x <= 6; x++) {
+            if (this.Field_Matrix[x][c_y].CheckColor().equals(match)) {
+                concurrent++;
+            } else {
+                concurrent = 0;
+            }
+            if (concurrent == 4)
+                return concurrent;
+        }
+
+        return concurrent;
     }
 
     public int[] findLowest(int x, int y, String direction) {
@@ -31,10 +63,10 @@ public abstract class General_Functions {
         return result;
     }
 
-    public boolean checkHorizontal(Player currentPlayer){
+    public boolean checkHorizontal(Player currentPlayer) {
         int concurrent = 0;
         int c_y = currentPlayer.currentField().getCoordinates()[1];
-        
+
         for (int x = 0; x <= 6; x++) {
             if (this.Field_Matrix[x][c_y].CheckColor().equals(currentPlayer.getColor())) {
                 concurrent++;
@@ -44,26 +76,11 @@ public abstract class General_Functions {
             if (concurrent == 4)
                 return true;
         }
-        
+
         return false;
     }
-    //Checks how many Field of a specific Color Match and returns the number
-    public int checkHorizontal(String match, int c_y){
-        int concurrent = 0;
-        for (int x = 0; x <= 6; x++) {
-            if (this.Field_Matrix[x][c_y].CheckColor().equals(match)) {
-                concurrent++;
-            } else {
-                concurrent = 0;
-            }
-            if (concurrent == 4)
-                return concurrent;
-        }
-        
-        return concurrent;
-    }
 
-    public boolean checkVertical(Player currentPlayer){
+    public boolean checkVertical(Player currentPlayer) {
         int concurrent = 0;
         int c_x = currentPlayer.currentField().getCoordinates()[0];
         for (int y = 0; y <= 5; y++) {
@@ -78,8 +95,7 @@ public abstract class General_Functions {
         return false;
     }
 
-
-    public boolean checkDiagonals(Player currentPlayer){
+    public boolean checkDiagonals(Player currentPlayer) {
         int concurrent = 0;
         int c_y = currentPlayer.currentField().getCoordinates()[1];
         int c_x = currentPlayer.currentField().getCoordinates()[0];
@@ -119,6 +135,30 @@ public abstract class General_Functions {
             tempy++;
         }
         return false;
+    }
+
+    public Turn CheckWincondition(Player currentPlayer) {
+        Turn turn = new Turn(Turnnum, currentPlayer, this.Field_Matrix);
+        Turnnum++;
+
+        // Directional Checks
+        if (checkHorizontal(currentPlayer) || checkDiagonals(currentPlayer) || checkVertical(currentPlayer)) {
+            currentPlayer.setWon();
+        }
+
+        return turn;
+    }
+
+    /**
+     * @Description Kann genutzt werden um die Ki für einen guten Zug zu belohnen
+     *              oder
+     *              einen versäumten Gewinn zu bestrafen.
+     * @param ? Evtl Turn Objekt oder Koordinaten
+     * @returns Gibt true zurück wenn das spiel in dem Momentanen Zug gewinnar war.
+     */
+    private void winnable(Turn turn) {
+        // TODO Implementieren
+
     }
 
 }

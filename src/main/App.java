@@ -5,6 +5,7 @@ import java.util.Random;
 
 import Connect_Four.Connect_Four;
 import Connect_Four.Turn;
+import Utility.Factory;
 
 public class App {
 
@@ -17,15 +18,14 @@ public class App {
         ArrayList<Thread> l = new ArrayList<Thread>();
         Random r = new Random();
         //Connect_Four cf = new Connect_Four(list);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 15; i++) {
             l.add(new Thread(new Connect_Four(list)));
+            //l.add(new Thread(new TestThread()));
             //Connect_Four cf = new Connect_Four();
-            System.out.println("started Ai instance");
             l.get(i).start();
         }
 
         l.get(0).join();
-
         for (Turn Turn : list.get(0)) {
             System.out.println(Turn.getNumber());;
         }

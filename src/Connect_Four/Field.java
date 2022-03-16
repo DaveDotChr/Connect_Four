@@ -9,7 +9,7 @@ public class Field {
     private static int FieldCount = 1;
     public double prediction = 1.0;
     private boolean setable;
-    private String[] predColor = {"1","","","","","","",""};
+    private String[] predictionColor = {"1","","","","","","",""};
 
 
     public Field(int x_pos, int y_pos){
@@ -49,6 +49,7 @@ public class Field {
     }
 
     public void calculatePrediction(){
+        //TODO Auslagern in Calculations Klasse
         this.prediction = 9;
     }
 
@@ -60,6 +61,10 @@ public class Field {
             return "0.0";
         }
         return String.valueOf(this.prediction);
+    }
+
+    public void setPrediction(double prediction){
+        this.prediction = prediction;
     }
     
 }
