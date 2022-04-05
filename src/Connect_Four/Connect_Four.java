@@ -1,6 +1,7 @@
 package Connect_Four;
 
 import Player.Player;
+import Player.Teams;
 import Utility.Calculations;
 import Utility.Factory;
 import AI.AI;
@@ -47,13 +48,13 @@ public class Connect_Four implements Runnable{
 
     private void initPlayers() {
         Players = new Human_Player[2];
-        Players[0] = new Human_Player(this.Field_Matrix, "R");
-        Players[1] = new Human_Player(this.Field_Matrix, "B");
+        Players[0] = new Human_Player(this.Field_Matrix, Teams.Red);
+        Players[1] = new Human_Player(this.Field_Matrix, Teams.Blue);
 
         
         AI_Players = new AI[2];
-        AI_Players[0]= new AI(this.Field_Matrix, "R");
-        AI_Players[1]= new AI(this.Field_Matrix, "B");
+        AI_Players[0]= new AI(this.Field_Matrix, Teams.Red);
+        AI_Players[1]= new AI(this.Field_Matrix, Teams.Blue);
 
     }
 
@@ -99,14 +100,14 @@ public class Connect_Four implements Runnable{
             str.append("     ");
             for (int x = 0; x <= 6; x++) {
                 String color = "";
-                if(Field_Matrix[x][y].CheckColor().equals("R")){
+                if(Field_Matrix[x][y].colorMatch(Teams.Red)){
                     color = "\u001B[31m";
-                } else if(Field_Matrix[x][y].CheckColor().equals("B")) {
+                } else if(Field_Matrix[x][y].colorMatch(Teams.Blue)) {
                     color = "\u001B[34m";
                 } else {
                     color = "\u001B[0m";
                 }
-                str.append(color +"[" + Field_Matrix[x][y].CheckColor() + "] ");
+                str.append(color +"[" + Field_Matrix[x][y].getColor().getshortName() + "] ");
                 
                 color = "\u001B[0m";
             }

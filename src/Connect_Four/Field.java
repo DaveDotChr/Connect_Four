@@ -1,8 +1,10 @@
 package Connect_Four;
 
+import Player.Teams;
+
 public class Field {
     
-    private String Color;
+    private Teams Color;
     private boolean Set;
     private int x_pos;
     private int y_pos;
@@ -16,14 +18,14 @@ public class Field {
         this.x_pos = x_pos;
         this.y_pos = y_pos;
         this.Set = false;
-        this.Color = " ";
+        this.Color = Teams.neutral;
         //System.out.println("Field " + FieldCount + " created" + x_pos + " <x-y> " + y_pos);
         FieldCount++;
     }
 
 
-    public void Fill (String setColor){
-        this.Color = setColor;
+    public void Fill (Teams setTeam){
+        this.Color = setTeam;
         this.Set = true;
     }
 
@@ -31,9 +33,23 @@ public class Field {
         return this.Set;
     }
 
-    public String CheckColor(){
+    public Teams getColor(){
         return Color;
     }
+
+    /** 
+     * @Description Takes color String as Input
+     * @return true if match, false if no match
+    */ 
+    public boolean colorMatch(Teams match){
+        return match == this.Color;
+    }
+
+
+    /**
+     * @Description First Array Element is x, second is y coordinate
+     * @return Array with coordinates
+     */
 
     public int[] getCoordinates(){
         int[] re = {x_pos, y_pos};

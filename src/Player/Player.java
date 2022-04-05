@@ -4,14 +4,14 @@ import Connect_Four.Field;
 import java.util.Scanner;
 
 public abstract class Player implements Actions{
-
-    protected String Color;
+    
+    protected Teams Color;
     protected boolean Won;
     protected Scanner sc = new Scanner(System.in);
     protected Field[][] Field_Matrix = new Field[7][6];
     protected Field currentField;
 
-    protected Player(Field[][] Field_Matrix, String Color) {
+    protected Player(Field[][] Field_Matrix, Teams Color) {
         this.Field_Matrix = Field_Matrix;
         this.Color = Color;
     }
@@ -55,7 +55,7 @@ public abstract class Player implements Actions{
         return currentField;
     }
 
-    public String getColor() {
-        return this.Color;
+    public Teams getColor() {
+        return Color;
     }
 }

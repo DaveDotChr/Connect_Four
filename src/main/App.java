@@ -18,7 +18,7 @@ public class App {
         ArrayList<Thread> l = new ArrayList<Thread>();
         Random r = new Random();
         //Connect_Four cf = new Connect_Four(list);
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 1; i++) {
             l.add(new Thread(new Connect_Four(list)));
             //l.add(new Thread(new TestThread()));
             //Connect_Four cf = new Connect_Four();

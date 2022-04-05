@@ -1,43 +1,37 @@
 package Connect_Four;
 
-import Player.Player;
-import jdk.jfr.Description;
-
-    /* @Description Not sure how to use this as of yet
-    */
+import Player.Teams;
 
 public class Turn {
 
     private int x_pos; //local use
     private int y_pos; //local use
-    private Field Field;
-    private int connects = 0;
+    private int[] coordinates = new int[2];
+    private Teams color = Teams.neutral;
+    //private Field Field; //Can be recreated by x, y and Color
+    //private int connects = 0;
     private int TurnNumber;
-    private Player Player;
+    //private Player Player;
 
-
-    public Turn(int Turnnum, Player Player, Field[][] matchstate){
+    public Turn(int Turnnum, Field currentField){
         this.TurnNumber = Turnnum;
-        this.Field = Player.currentField();
-        this.Player = Player;
-        connects();
-    }
-
-    private void connects(){
-        //TODO Berechnung der sich verbindenden gleichfarbingen Felder bzw direkt in check wincondition methode
-        this.connects = 0;
+        this.color = currentField.getColor();
+        this.x_pos = currentField.getCoordinates()[0];
+        this.y_pos = currentField.getCoordinates()[1];      
+        this.coordinates[0] = x_pos;
+        this.coordinates[1] = y_pos;
     }
 
     public int getNumber(){
         return this.TurnNumber;
     }
 
-    public void setConnectsTo(int connects){
-        this.connects = connects;
+    public int[] getCoordinates(){
+        return this.coordinates;
     }
-    
-    public int getConnectsTo(){
-        return this.connects;
+
+    public Teams getColor(){
+        return this.color;
     }
 
 }

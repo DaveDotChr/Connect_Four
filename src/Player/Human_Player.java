@@ -6,7 +6,7 @@ import Connect_Four.Turn;
 public class Human_Player extends Player{
 
 
-    public Human_Player(Field[][] Field_Matrix, String Color){
+    public Human_Player(Field[][] Field_Matrix, Teams Color){
         super(Field_Matrix, Color);
     }
 
@@ -17,7 +17,7 @@ public class Human_Player extends Player{
             //Lets Player choose a Line to place the Symbol in, if not full places the Symbol
             try{
                 test = placeSymbol(Integer.parseInt(sc.nextLine()));
-            } catch(ArrayIndexOutOfBoundsException e){
+            } catch(ArrayIndexOutOfBoundsException | NumberFormatException e){
                 System.out.println("Line does not exist choose from 0-6");
                 ex = e;
             }

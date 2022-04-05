@@ -4,6 +4,7 @@ import java.util.Random;
 
 import Connect_Four.Field;
 import Player.Actions;
+import Player.Teams;
 import Utility.Calculations;
 import Utility.Factory;
 import Connect_Four.Turn;
@@ -14,11 +15,11 @@ public class AI implements Actions {
     private Calculations calc;
     private Turn turn;
     private Random r = new Random();
-    private String Color;
+    private Teams Color;
     private Field currentField;
     private boolean Won;
 
-    public AI(Field[][] Field_Matrix, String Color) {
+    public AI(Field[][] Field_Matrix, Teams Color) {
         
         this.Field_Matrix = Field_Matrix;
         Factory.createCalculations(Field_Matrix);
@@ -63,7 +64,7 @@ public class AI implements Actions {
     }
 
     @Override
-    public String getColor() {
+    public Teams getColor() {
         return this.Color;
     }
 

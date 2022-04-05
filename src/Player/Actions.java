@@ -16,6 +16,6 @@ public interface Actions {
     Field currentField();
 
     //Returns the Color of a Player
-    String getColor();
+    Teams getColor();
 
 }
