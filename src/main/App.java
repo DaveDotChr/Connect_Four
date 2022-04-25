@@ -5,13 +5,18 @@ import java.util.Random;
 
 import Connect_Four.Connect_Four;
 import Connect_Four.Turn;
+import Player.Teams;
 import Utility.Factory;
 
 public class App {
 
     
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        
+
+        System.out.println();
+        System.out.println((Teams.Blue == Teams.Red ? Teams.Red : Teams.Blue) == Teams.getOpposite(Teams.Red));
         
         //Hier steht text
         ArrayList<ArrayList<Turn>> list = new ArrayList<ArrayList<Turn>>();
@@ -25,7 +30,11 @@ public class App {
             l.get(i).start();
         }
 
-        l.get(0).join();
+        try {
+            l.get(0).join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         for (Turn Turn : list.get(0)) {
             System.out.println(Turn.getNumber());;
         }

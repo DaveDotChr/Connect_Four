@@ -5,6 +5,8 @@ import Player.Teams;
 import Utility.Calculations;
 import Utility.Factory;
 import AI.AI;
+import AI.Reward_Calculations;
+import Player.Actions;
 import Player.Human_Player;
 
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ public class Connect_Four implements Runnable{
                 }
             }
         }
-        this.calc = Factory.createCalculations(Field_Matrix);
+        this.calc = new Calculations(Field_Matrix);
     }
 
     public void run(){
@@ -79,6 +81,8 @@ public class Connect_Four implements Runnable{
         doCalculations();
         drawBoard();
         currentPlayer.StartTurn();
+        Reward_Calculations rw = new Reward_Calculations(Field_Matrix);
+        rw.is_H_Buildup(currentPlayer.currentField());
         Turns.add(calc.CheckWincondition(currentPlayer));
     }
 
